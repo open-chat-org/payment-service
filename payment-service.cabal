@@ -6,12 +6,12 @@ cabal-version: 1.12
 
 name:           payment-service
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/payment-service#readme>
-homepage:       https://github.com/githubuser/payment-service#readme
-bug-reports:    https://github.com/githubuser/payment-service/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2022 Author name here
+description:    Please see the README on GitHub at <https://github.com/open-chat-org/payment-service>
+homepage:       https://github.com/open-chat-org/payment-service#readme
+bug-reports:    https://github.com/open-chat-org/payment-service/issues
+author:         Nguyen Hoang Nam
+maintainer:     nguyenhoangnam.dev@gmail.com
+copyright:      2022 Nguyen Hoang Nam
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -21,10 +21,12 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/payment-service
+  location: https://github.com/open-chat-org/payment-service
 
 library
   exposed-modules:
+      Handler.Ethereum
+      Handler.Response
       Lib
   other-modules:
       Paths_payment_service

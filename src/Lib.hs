@@ -1,21 +1,27 @@
 {-# LANGUAGE OverloadedStrings #-}
 
 module Lib
-    ( someFunc
-    ) where
+  ( someFunc,
+  )
+where
 
+import Data.String (IsString (fromString))
+import Handler.Ethereum (getEthereum, transactEthereum)
+import Handler.Response (failureResponse, successfulResponse)
+import Network.HTTP.Types.Method (methodGet, methodPost)
+import Network.HTTP.Types.Status (status200, status404)
+import Network.Wai (Request (queryString, rawPathInfo, rawQueryString, requestMethod), Response, ResponseReceived, responseLBS)
 import Network.Wai.Handler.Warp (run)
-import Network.Wai (Request, Response, ResponseReceived, responseLBS)
-import Network.HTTP.Types.Status (status200)
 
 someFunc :: IO ()
-someFunc = run 8080 requestHandler
+someFunc = run 8084 requestHandler
 
 requestHandler :: Request -> (Response -> IO ResponseReceived) -> IO ResponseReceived
 requestHandler request respond =
-    let
-        response = responseLBS status200 [] "Hello, client!"
-    in
-        do
-            putStrLn "Received an HTTP request!"
-            respond response
+  let method = requestMethod request
+      path = rawPathInfo request
+   in do
+        case (show path, method) of
+          ("/api/v0.1/payment/ethereum", methodGet) -> respond $ getEthereum request
+          ("/api/v0.1/payment/ethereum", methodPost) -> respond $ transactEthereum request
+          _ -> respond failureResponse
